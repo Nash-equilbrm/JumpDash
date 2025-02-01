@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -108,6 +109,16 @@ namespace Patterns
                     pool[pool.Count - 1].SetActive(false);
                 }
             }
+
+
+            /// <summary>
+            /// Find the first object that satisfied a condition
+            /// </summary>
+            public GameObject Find(Func<GameObject,bool> condition)
+            {
+                return pool.FirstOrDefault(condition);
+            }
+
         }
 
         //A transform to store inactive objects

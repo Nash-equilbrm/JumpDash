@@ -1,8 +1,5 @@
+using Commons;
 using Patterns;
-using System.Collections;
-using System.Collections.Generic;
-using UI;
-using UnityEngine;
 
 namespace UI
 {
@@ -25,6 +22,7 @@ namespace UI
 
         public void OnPlayBtnClicked()
         {
+            LogUtility.ValidInfo("MainMenuScreen", "OnPlayBtnClicked");
             this.Broadcast(EventID.OnPlayBtnClicked);
             Hide();
         }

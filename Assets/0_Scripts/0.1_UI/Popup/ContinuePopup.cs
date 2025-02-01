@@ -45,5 +45,14 @@ namespace Game.UI
                 base.Hide();
             });
         }
+
+        public void OnContinueBtnClicked()
+        {
+            pCanvasGroup.DOFade(0, duration).SetEase(ease).OnComplete(() =>
+            {
+                this.Broadcast(EventID.OnContinueClicked);
+                base.Hide();
+            });
+        }
     }
 }

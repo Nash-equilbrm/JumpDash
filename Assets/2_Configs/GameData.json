@@ -1,6 +1,8 @@
 {
-  "bestScore": 0,
+  "bestScore": {
+    "jumpDash": 0,
+    "knifeHit": 0
+  },
   "volumnFx": 1.0,
-  "volumnMusic": 1.0,
-  "currentLevel": 1
+  "volumnMusic": 1.0
 }

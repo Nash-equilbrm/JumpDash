@@ -24,23 +24,32 @@ namespace Game.Effect
         {
             PubSub.WaitForInstance(this, () =>
             {
-                this.Register(EventID.HitBlock, OnHitBlock);
+                this.Register(EventID.HitBlock, HeavyShake);
+                this.Register(EventID.PlayerFinishMovement, LightShake);
             });
         }
 
         private void OnDisable()
         {
-            this.Unregister(EventID.HitBlock, OnHitBlock);
+            this.Unregister(EventID.HitBlock, HeavyShake);
+            this.Unregister(EventID.PlayerFinishMovement, LightShake);
         }
 
-        private void OnHitBlock(object obj)
+        private void LightShake(object obj)
         {
+            strength = 0.2f;
             ShakeCamera();
         }
 
+        private void HeavyShake(object obj)
+        {
+            strength = 0.5f;
+            ShakeCamera();
+        }
+
+
         public void ShakeCamera()
         {
-            LogUtility.NotificationInfo("Shake Camera");
             transform.DOShakePosition(duration, strength, vibrato, randomness)
                 .OnComplete(() => transform.position = originalPos);
         }

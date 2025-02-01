@@ -9,35 +9,31 @@ namespace UI
     {
         public GameObject cScreen, cPopup, cNotify, cOverlap;
 
-        private Dictionary<string, BaseScreen> screens = new Dictionary<string, BaseScreen>();
-        private Dictionary<string, BasePopup> popups = new Dictionary<string, BasePopup>();
-        private Dictionary<string, BaseNotify> notifies = new Dictionary<string, BaseNotify>();
-        private Dictionary<string, BaseOverlap> overlaps = new Dictionary<string, BaseOverlap>();
+        private Dictionary<string, BaseScreen> _screens = new Dictionary<string, BaseScreen>();
+        private Dictionary<string, BasePopup> _popups = new Dictionary<string, BasePopup>();
+        private Dictionary<string, BaseNotify> _notifies = new Dictionary<string, BaseNotify>();
+        private Dictionary<string, BaseOverlap> _overlaps = new Dictionary<string, BaseOverlap>();
 
-        public Dictionary<string, BaseScreen> Screens => screens;
-        public Dictionary<string, BasePopup> Popups => popups;
-        public Dictionary<string, BaseNotify> Notifies => notifies;
-        public Dictionary<string, BaseOverlap> Overlaps => overlaps;
+        public Dictionary<string, BaseScreen> Screens => _screens;
+        public Dictionary<string, BasePopup> Popups => _popups;
+        public Dictionary<string, BaseNotify> Notifies => _notifies;
+        public Dictionary<string, BaseOverlap> Overlaps => _overlaps;
 
-        private BaseScreen curScreen;
-        private BasePopup curPopup;
-        private BaseNotify curNotify;
-        private BaseOverlap curOverlap;
+        private BaseScreen _curScreen;
+        private BasePopup _curPopup;
+        private BaseNotify _curNotify;
+        private BaseOverlap _curOverlap;
 
-        public BaseScreen CurScreen => curScreen;
-        public BasePopup CurPopup => curPopup;
-        public BaseNotify CurNotify => curNotify;
-        public BaseOverlap CurOverlap => curOverlap;
+        public BaseScreen CurScreen => _curScreen;
+        public BasePopup CurPopup => _curPopup;
+        public BaseNotify CurNotify => _curNotify;
+        public BaseOverlap CurOverlap => _curOverlap;
 
         private const string SCREEN_RESOURCES_PATH = "Prefabs/UI/Screen/";
         private const string POPUP_RESOURCES_PATH = "Prefabs/UI/Popup/";
         private const string NOTIFY_RESOURCES_PATH = "Prefabs/UI/Notify/";
         private const string OVERLAP_RESOURCES_PATH = "Prefabs/UI/Overlap/";
 
-        private List<string> rmScreens = new List<string>();
-        private List<string> rmPopups = new List<string>();
-        private List<string> rmNotifies = new List<string>();
-        private List<string> rmOverlaps = new List<string>();
 
         #region Screen
 
@@ -65,14 +61,14 @@ namespace UI
         {
             BaseScreen screenScr = null;
 
-            foreach (KeyValuePair<string, BaseScreen> item in screens)
+            foreach (KeyValuePair<string, BaseScreen> item in _screens)
             {
                 screenScr = item.Value;
                 if (screenScr == null || screenScr.IsHide)
                     continue;
                 screenScr.Hide();
 
-                if (screens.Count <= 0)
+                if (_screens.Count <= 0)
                     break;
             }
         }
@@ -80,64 +76,45 @@ namespace UI
         public T GetExistScreen<T>() where T : BaseScreen
         {
             string screenName = typeof(T).Name;
-            if (screens.ContainsKey(screenName))
+            if (_screens.ContainsKey(screenName))
             {
-                return screens[screenName] as T;
+                return _screens[screenName] as T;
             }
             return null;
         }
 
-        private void RemoveScreen(string v)
-        {
-            for (int i = 0; i < rmScreens.Count; i++)
-            {
-                if (rmScreens[i].Equals(v))
-                {
-                    if (screens.ContainsKey(v))
-                    {
-                        Destroy(screens[v].gameObject);
-                        screens.Remove(v);
-
-                        Resources.UnloadUnusedAssets();
-                        System.GC.Collect();
-                    }
-                    break;
-                }
-            }
-        }
 
         public void ShowScreen<T>(object data = null, bool forceShowData = false) where T : BaseScreen
         {
             string screenName = typeof(T).Name;
             BaseScreen result = null;
-            if (curScreen != null)
+            if (_curScreen != null)
             {
-                var curName = curScreen.GetType().Name;
+                var curName = _curScreen.GetType().Name;
                 if (curName.Equals(screenName))
                 {
-                    result = curScreen;
+                    result = _curScreen;
                 }
                 else
                 {
-                    screens[curName].Hide();
-                    RemoveScreen(curName);
+                    _screens[curName].Hide();
                 }
             }
 
             if (result == null)
             {
-                if (!screens.ContainsKey(screenName))
+                if (!_screens.ContainsKey(screenName))
                 {
                     BaseScreen screenScr = GetNewScreen<T>();
                     if (screenScr != null)
                     {
-                        screens.Add(screenName, screenScr);
+                        _screens.Add(screenName, screenScr);
                     }
                 }
 
-                if (screens.ContainsKey(screenName))
+                if (_screens.ContainsKey(screenName))
                 {
-                    result = screens[screenName];
+                    result = _screens[screenName];
                 }
             }
 
@@ -159,7 +136,7 @@ namespace UI
 
             if (isShow)
             {
-                curScreen = result;
+                _curScreen = result;
                 result.transform.SetAsLastSibling();
                 result.Show(data);
             }
@@ -193,14 +170,14 @@ namespace UI
         {
             BasePopup popupScr = null;
 
-            foreach (KeyValuePair<string, BasePopup> item in popups)
+            foreach (KeyValuePair<string, BasePopup> item in _popups)
             {
                 popupScr = item.Value;
                 if (popupScr == null || popupScr.IsHide)
                     continue;
                 popupScr.Hide();
 
-                if (popups.Count <= 0)
+                if (_popups.Count <= 0)
                     break;
             }
         }
@@ -208,30 +185,11 @@ namespace UI
         public T GetExistPopup<T>() where T : BasePopup
         {
             string popupName = typeof(T).Name;
-            if (popups.ContainsKey(popupName))
+            if (_popups.ContainsKey(popupName))
             {
-                return popups[popupName] as T;
+                return _popups[popupName] as T;
             }
             return null;
-        }
-
-        private void RemovePopup(string v)
-        {
-            for (int i = 0; i < rmPopups.Count; i++)
-            {
-                if (rmPopups[i].Equals(v))
-                {
-                    if (popups.ContainsKey(v))
-                    {
-                        Destroy(popups[v].gameObject);
-                        popups.Remove(v);
-
-                        Resources.UnloadUnusedAssets();
-                        System.GC.Collect();
-                    }
-                    break;
-                }
-            }
         }
 
         public void ShowPopup<T>(object data = null, bool forceShowData = false) where T : BasePopup
@@ -239,41 +197,40 @@ namespace UI
             string popupName = typeof(T).Name;
             BasePopup result = null;
 
-            if (curPopup != null)
+            if (_curPopup != null)
             {
-                var curName = curPopup.GetType().Name;
+                var curName = _curPopup.GetType().Name;
                 if (curName.Equals(popupName))
                 {
-                    result = curPopup;
+                    result = _curPopup;
                 }
                 else
                 {
-                    popups[curName].Hide();
-                    RemovePopup(curName);
+                    _popups[curName].Hide();
                 }
             }
 
             if (result == null)
             {
-                if (!popups.ContainsKey(popupName))
+                if (!_popups.ContainsKey(popupName))
                 {
                     BasePopup popupScr = GetNewPopup<T>();
                     if (popupScr != null)
                     {
-                        popups.Add(popupName, popupScr);
+                        _popups.Add(popupName, popupScr);
                     }
                 }
 
-                if (popups.ContainsKey(popupName))
+                if (_popups.ContainsKey(popupName))
                 {
-                    result = popups[popupName];
+                    result = _popups[popupName];
                 }
             }
 
 
             if (result != null && (forceShowData || result.IsHide))
             {
-                curPopup = result;
+                _curPopup = result;
                 result.transform.SetAsLastSibling();
                 (result as T).Show(data);
             }
@@ -307,14 +264,14 @@ namespace UI
         {
             BaseNotify notifyScr = null;
 
-            foreach (KeyValuePair<string, BaseNotify> item in notifies)
+            foreach (KeyValuePair<string, BaseNotify> item in _notifies)
             {
                 notifyScr = item.Value;
                 if (notifyScr == null || notifyScr.IsHide)
                     continue;
                 notifyScr.Hide();
 
-                if (notifies.Count <= 0)
+                if (_notifies.Count <= 0)
                     break;
             }
         }
@@ -322,65 +279,46 @@ namespace UI
         public T GetExistNotify<T>() where T : BaseNotify
         {
             string notifyName = typeof(T).Name;
-            if (notifies.ContainsKey(notifyName))
+            if (_notifies.ContainsKey(notifyName))
             {
-                return notifies[notifyName] as T;
+                return _notifies[notifyName] as T;
             }
             return null;
         }
 
-        private void RemoveNotify(string v)
-        {
-            for (int i = 0; i < rmNotifies.Count; i++)
-            {
-                if (rmNotifies[i].Equals(v))
-                {
-                    if (notifies.ContainsKey(v))
-                    {
-                        Destroy(notifies[v].gameObject);
-                        notifies.Remove(v);
-
-                        Resources.UnloadUnusedAssets();
-                        System.GC.Collect();
-                    }
-                    break;
-                }
-            }
-        }
-
+        
         public void ShowNotify<T>(object data = null, bool forceShowData = false) where T : BaseNotify
         {
             string notifyName = typeof(T).Name;
             BaseNotify result = null;
 
-            if (curNotify != null)
+            if (_curNotify != null)
             {
-                var curName = curPopup.GetType().Name;
+                var curName = _curPopup.GetType().Name;
                 if (curName.Equals(notifyName))
                 {
-                    result = curNotify;
+                    result = _curNotify;
                 }
                 else
                 {
-                    notifies[curName].Hide();
-                    RemoveNotify(curName);
+                    _notifies[curName].Hide();
                 }
             }
 
             if (result == null)
             {
-                if (!notifies.ContainsKey(notifyName))
+                if (!_notifies.ContainsKey(notifyName))
                 {
                     BaseNotify notifyScr = GetNewNotify<T>();
                     if (notifyScr != null)
                     {
-                        notifies.Add(notifyName, notifyScr);
+                        _notifies.Add(notifyName, notifyScr);
                     }
                 }
 
-                if (notifies.ContainsKey(notifyName))
+                if (_notifies.ContainsKey(notifyName))
                 {
-                    result = notifies[notifyName];
+                    result = _notifies[notifyName];
                 }
             }
 
@@ -402,7 +340,7 @@ namespace UI
 
             if (isShow)
             {
-                curNotify = result;
+                _curNotify = result;
                 result.transform.SetAsLastSibling();
                 result.Show(data);
             }
@@ -436,14 +374,14 @@ namespace UI
         {
             BaseOverlap overlapScr = null;
 
-            foreach (KeyValuePair<string, BaseOverlap> item in overlaps)
+            foreach (KeyValuePair<string, BaseOverlap> item in _overlaps)
             {
                 overlapScr = item.Value;
                 if (overlapScr == null || overlapScr.IsHide)
                     continue;
                 overlapScr.Hide();
 
-                if (overlaps.Count <= 0)
+                if (_overlaps.Count <= 0)
                     break;
             }
         }
@@ -451,30 +389,11 @@ namespace UI
         public T GetExistOverlap<T>() where T : BaseOverlap
         {
             string overlapName = typeof(T).Name;
-            if (overlaps.ContainsKey(overlapName))
+            if (_overlaps.ContainsKey(overlapName))
             {
-                return overlaps[overlapName] as T;
+                return _overlaps[overlapName] as T;
             }
             return null;
-        }
-
-        private void RemoveOverlap(string v)
-        {
-            for (int i = 0; i < rmOverlaps.Count; i++)
-            {
-                if (rmOverlaps[i].Equals(v))
-                {
-                    if (overlaps.ContainsKey(v))
-                    {
-                        Destroy(overlaps[v].gameObject);
-                        overlaps.Remove(v);
-
-                        Resources.UnloadUnusedAssets();
-                        System.GC.Collect();
-                    }
-                    break;
-                }
-            }
         }
 
         public void ShowOverlap<T>(object data = null, bool forceShowData = false) where T : BaseOverlap
@@ -482,34 +401,33 @@ namespace UI
             string overlapName = typeof(T).Name;
             BaseOverlap result = null;
 
-            if (curOverlap != null)
+            if (_curOverlap != null)
             {
-                var curName = curOverlap.GetType().Name;
+                var curName = _curOverlap.GetType().Name;
                 if (curName.Equals(overlapName))
                 {
-                    result = curOverlap;
+                    result = _curOverlap;
                 }
                 else
                 {
-                    overlaps[curName].Hide();
-                    RemoveOverlap(curName);
+                    _overlaps[curName].Hide();
                 }
             }
 
             if (result == null)
             {
-                if (!overlaps.ContainsKey(overlapName))
+                if (!_overlaps.ContainsKey(overlapName))
                 {
                     BaseOverlap overlapScr = GetNewOverLap<T>();
                     if (overlapScr != null)
                     {
-                        overlaps.Add(overlapName, overlapScr);
+                        _overlaps.Add(overlapName, overlapScr);
                     }
                 }
 
-                if (overlaps.ContainsKey(overlapName))
+                if (_overlaps.ContainsKey(overlapName))
                 {
-                    result = overlaps[overlapName];
+                    result = _overlaps[overlapName];
                 }
             }
 
@@ -531,7 +449,7 @@ namespace UI
 
             if (isShow)
             {
-                curOverlap = result;
+                _curOverlap = result;
                 result.transform.SetAsLastSibling();
                 result.Show(data);
             }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -50,12 +51,12 @@ namespace Commons
         }
 
 
-        public static void UnloadSceneAsync(MonoBehaviour context, int sceneIndex, System.Action callback)
+        public static void UnloadSceneAsync(MonoBehaviour context, int sceneIndex, System.Action callback = null, bool gcCollect = false)
         {
-            context.StartCoroutine(IEUnloadSceneAsync(sceneIndex, callback));
+            context.StartCoroutine(IEUnloadSceneAsync(sceneIndex, callback, gcCollect));
         }
 
-        private static IEnumerator IEUnloadSceneAsync(int sceneIndex, System.Action callback)
+        private static IEnumerator IEUnloadSceneAsync(int sceneIndex, System.Action callback, bool gcCollect)
         {
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(sceneIndex);
 
@@ -65,15 +66,30 @@ namespace Commons
             }
 
             callback?.Invoke();
+            if (gcCollect)
+            {
+                Resources.UnloadUnusedAssets();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
         }
     }
 
 
-    public static class Strings
+    public static class Constants
     {
-        public static string Blocks = "Blocks";
-        public static string BestScore = "Best Score";
-        public static string EnemyTag = "Enemy";
+        public static int SCENE_JUMP_DASH = 1;
+        public static string JUMP_DASH_PLAYER_RUN_ANIM = "Ninja Run";
+        public static string JUMP_DASH_PLAYER_JUMP_ANIM = "Ninja Jump";
+        public static string JUMP_DASH_PLAYER_DEAD_ANIM = "Ninja Dead";
+
+        public static string STR_BLOCK_TAG = "Block";
+        public static string STR_KNIFE_TAG = "Knife";
+        public static string STR_TARGET_TAG = "Target";
+        public static string STR_BONUS_TAG = "Bonus";
+        public static string STR_BEST_SCORE = "Best Score";
+        public static string STR_SCORE = "Score";
+        public static string STR_ENEMY_TAG = "Enemy";
     }
 }
 

@@ -29,7 +29,7 @@ namespace Game.State
 
         private void GetConfigAndData()
         {
-            _context.LevelDesignConfig = Common.ReadJson<LevelDesignConfig>(_context.levelDesignConfigFile);
+            _context.GameConfig = Common.ReadJson<GameConfig>(_context.gameConfigFile);
             _context.GameData = Common.ReadJson<GameData>(_context.gameDataFile);
             _context.ChangeState(GameManager.GameState.MainMenu);
         }

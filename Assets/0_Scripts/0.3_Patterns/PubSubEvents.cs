@@ -7,16 +7,27 @@ namespace Patterns
     public enum EventID
     {
         #region Gameplay
-        InitGamePlay,
-        PlayerFinishMovement,
+        InitBlockSpanwer,   // For Jump Dash
+        PlayerFinishMovement, // For Jump Dash
         GainPoint,
-        HitBlock,
+        HitBlock, // For Jump Dash
         BackToMainMenu,
+        FinishLoadingScene,
+        ExitMiniGame, // Notify that minigame is finish
+        UnloadMiniGame, // Actually unload minigame and free memory
+
+        PlayerFinishLaunch, // For Knife Hit
+        HitObstacle, // For Knife Hit
+        InitTarget, // For Knife Hit
+        ReinitTarget, // For Knife Hit
+        HitTarget,
         #endregion
 
         #region UI
         OnPlayBtnClicked,
         OnBackToMainMenuBtnClicked,
+        OnContinueClicked,
+   
         #endregion
     }
 }

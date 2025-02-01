@@ -8,9 +8,15 @@ namespace Game
     [Serializable]
     public class GameData
     {
-        public int bestScore;
+        public BestScore bestScore;
         public float volumnFx;
         public float volumnMusic;
-        public int currentLevel;
+    }
+
+    [Serializable]
+    public class BestScore
+    {
+        public float jumpDash;
+        public float knifeHit;
     }
 }

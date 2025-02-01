@@ -1,8 +1,0 @@
-{
-  "initialBlockSpeed": 1.0,
-  "maxBlockSpeed": 2.0,
-  "minBlockLength": 1,
-  "maxBlockLength": 4,
-  "spawnIntervalInSeconds": 1.5,
-  "freeContinueTotal": 1
-}

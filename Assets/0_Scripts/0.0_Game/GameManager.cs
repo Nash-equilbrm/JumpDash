@@ -11,13 +11,10 @@ namespace Game
         {
             LoadGame,
             MainMenu,
-            InitGameplay,
-            Gameplay,
-            EndGameplay
+            MiniGame,
         }
 
-        [Header("Prefabs")]
-        public GameObject playerPrefab;
+
 
 
         [Header("Hierachy")]
@@ -26,40 +23,37 @@ namespace Game
         public GameObject Settings;
         public GameObject World;
 
-        public GameObject Player { get; internal set; }
+
 
         #region Configs
         [Header("Config files")]
-        public TextAsset levelDesignConfigFile;
-        private LevelDesignConfig _levelDesignConfig;
-        public LevelDesignConfig LevelDesignConfig { get => _levelDesignConfig; internal set => _levelDesignConfig = value; }
+        public TextAsset gameConfigFile;
+        [SerializeField] private GameConfig _gameConfig;
+        public GameConfig GameConfig { get => _gameConfig; internal set => _gameConfig = value; }
 
         public TextAsset gameDataFile;
         [SerializeField] private GameData _gameData;
         public GameData GameData { get => _gameData; internal set => _gameData = value; }
+
+        public int CurrentGame { get; private set; } = 2;
         #endregion
 
 
         #region States
         private LoadGameDataState _loadGameState;
         private MainMenuState _mainMenuState;
-        private InitState _initGameplayState;
-        private GameplayState _gameplayState;
-        private GameEndState _gameEndState; 
+        private MiniGameState _miniGameState;
         #endregion
 
         private StateMachine<GameManager> _stateMachine = new();
 
 
-        [field: SerializeField] public int CurrentScore { get; set; } = 0;
 
         private void Start()
         {
             _loadGameState = new(this);
             _mainMenuState = new(this);
-            _initGameplayState = new(this);
-            _gameplayState = new(this);
-            _gameEndState = new(this);
+            _miniGameState = new(this);
 
             _stateMachine.Initialize(_loadGameState);
         }
@@ -68,29 +62,19 @@ namespace Game
         {
             switch (state) 
             {
+                case GameState.LoadGame:
+                    {
+                        _stateMachine.ChangeState(_loadGameState);
+                        break;
+                    }
                 case GameState.MainMenu:
                     {
                         _stateMachine.ChangeState(_mainMenuState);
                         break;
                     }
-                case GameState.InitGameplay:
+                case GameState.MiniGame:
                     {
-                        _stateMachine.ChangeState(_initGameplayState);
-                        break;
-                    }
-                case GameState.Gameplay:
-                    {
-                        _stateMachine.ChangeState(_gameplayState);
-                        break;
-                    }
-                case GameState.EndGameplay:
-                    {
-                        _stateMachine.ChangeState(_gameEndState);
-                        break;
-                    }
-                case GameState.LoadGame:
-                    {
-                        _stateMachine.ChangeState(_loadGameState);
+                        _stateMachine.ChangeState(_miniGameState);
                         break;
                     }
             }
