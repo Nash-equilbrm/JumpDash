@@ -19,7 +19,6 @@ namespace Patterns
         PlayerFinishLaunch, // For Knife Hit
         HitObstacle, // For Knife Hit
         InitTarget, // For Knife Hit
-        ReinitTarget, // For Knife Hit
         HitTarget,
         #endregion
 
@@ -27,7 +26,13 @@ namespace Patterns
         OnPlayBtnClicked,
         OnBackToMainMenuBtnClicked,
         OnContinueClicked,
-   
+        BtnClicked,
+        ThrowKnife,
+        Jump,
+        LoseGame,
+        ContinueGame,
+        TargetExplode,
+
         #endregion
     }
 }

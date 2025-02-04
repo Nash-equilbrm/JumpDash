@@ -45,6 +45,7 @@ namespace Game
     {
         public int upperBound;
         public float[] targetSpeedRange;
+        public float changeTargetSpeedEverySeconds;
         public int[] obstacle;
         public int[] bonus;
         public int knifeCount;

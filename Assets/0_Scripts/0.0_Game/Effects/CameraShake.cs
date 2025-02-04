@@ -24,26 +24,30 @@ namespace Game.Effect
         {
             PubSub.WaitForInstance(this, () =>
             {
-                this.Register(EventID.HitBlock, HeavyShake);
+                this.Register(EventID.HitBlock, Shake);
                 this.Register(EventID.PlayerFinishMovement, LightShake);
+                this.Register(EventID.HitTarget, LightShake);
+                this.Register(EventID.HitObstacle, LightShake);
             });
         }
 
         private void OnDisable()
         {
-            this.Unregister(EventID.HitBlock, HeavyShake);
+            this.Unregister(EventID.HitBlock, Shake);
             this.Unregister(EventID.PlayerFinishMovement, LightShake);
+            this.Unregister(EventID.HitTarget, LightShake);
+            this.Unregister(EventID.HitObstacle, LightShake);
         }
 
         private void LightShake(object obj)
         {
-            strength = 0.2f;
+            strength = Constants.CAMERA_SHAKE_LIGHT;
             ShakeCamera();
         }
 
-        private void HeavyShake(object obj)
+        private void Shake(object obj)
         {
-            strength = 0.5f;
+            strength = Constants.CAMERA_SHAKE_MEDIUM;
             ShakeCamera();
         }
 

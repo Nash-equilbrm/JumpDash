@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 2942370847148542128}
   - component: {fileID: 8225946224656055118}
   - component: {fileID: 8554335353491888566}
+  - component: {fileID: 5400359611430423353}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -180,12 +181,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5400359611430423353}
+        m_TargetAssemblyTypeName: Game.KnifeHit.Player.PlayerAnimation, Assembly-CSharp
+        m_MethodName: OnLaunchKnife
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onScreenTouched:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8554335353491888566}
         m_TargetAssemblyTypeName: Game.KnifeHit.Player.PlayerLaunchKnife, Assembly-CSharp
         m_MethodName: OnPlayerLaunch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5400359611430423353}
+        m_TargetAssemblyTypeName: Game.KnifeHit.Player.PlayerAnimation, Assembly-CSharp
+        m_MethodName: OnLaunchKnife
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -253,7 +278,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7669871328666151852}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 7826b7a98bf7c0c4fb3535882c5759e2, type: 2}
   m_CullingMode: 0
@@ -279,6 +304,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 1486502910884836131}
+--- !u!114 &5400359611430423353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7669871328666151852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c75aaf582754e5643aa1bb00d067ea7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 8225946224656055118}
 --- !u!1 &7707879631084667513
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using Commons;
+using Game.UI;
 using Patterns;
 
 namespace UI
@@ -20,11 +21,16 @@ namespace UI
             base.Show(data);
         }
 
-        public void OnPlayBtnClicked()
+        //public void OnPlayBtnClicked()
+        //{
+        //    LogUtility.ValidInfo("MainMenuScreen", "OnPlayBtnClicked");
+        //    this.Broadcast(EventID.OnPlayBtnClicked);
+        //    Hide();
+        //}
+
+        public void OnChooseGameClicked()
         {
-            LogUtility.ValidInfo("MainMenuScreen", "OnPlayBtnClicked");
-            this.Broadcast(EventID.OnPlayBtnClicked);
-            Hide();
+            UIManager.Instance.ShowScreen<ChooseGameScreen>(forceShowData: true);
         }
     }
 }

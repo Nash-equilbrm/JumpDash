@@ -268,8 +268,11 @@ MonoBehaviour:
   duration: 0.5
   ease: 1
   iconColorActive: {r: 1, g: 1, b: 1, a: 1}
-  iconColorInactive: {r: 0, g: 0, b: 0, a: 1}
+  iconColorInactive: {r: 0, g: 0, b: 0, a: 0}
   iconColorDisabled: {r: 0, g: 0, b: 0, a: 0}
+  iconSizeActive: 1.5
+  iconSizeInactive: 1
+  iconSizeDisabled: 1.5
 --- !u!225 &5437044286732696246
 CanvasGroup:
   m_ObjectHideFlags: 0

@@ -34,37 +34,30 @@
     "knifeLaunchDuration": 1,
     "levels": [
       {
-        "upperBound": 3,
+        "upperBound": 2,
         "targetSpeedRange": [ 100.0 ],
-        "obstacle": [ 0 ],
+        "obstacle": [ 1 ],
         "bonus": [ 0 ],
         "knifeCount": 7
       },
       {
-        "upperBound": 5,
-        "targetSpeedRange": [ 100.0 ],
-        "obstacle": [ 1 ],
-        "bonus": [ 0, 1 ],
-        "knifeCount": 8
-      },
-      {
-        "upperBound": 8,
+        "upperBound": 4,
         "targetSpeedRange": [ 50.0, 100.0 ],
-        "obstacle": [ 2, 3 ],
+        "obstacle": [ 1, 3 ],
         "bonus": [ 0, 2 ],
         "knifeCount": 8
       },
       {
-        "upperBound": 10,
+        "upperBound": 8,
         "targetSpeedRange": [ -100.0, 100.0 ],
-        "obstacle": [ 0, 1 ],
+        "obstacle": [ 2, 3 ],
         "bonus": [ 0, 2 ],
         "knifeCount": 10
       },
       {
         "upperBound": -1,
         "targetSpeedRange": [ -100.0, 100.0 ],
-        "obstacle": [ 1, 3 ],
+        "obstacle": [ 3, 4 ],
         "bonus": [ 0, 2 ],
         "knifeCount": 10
       }

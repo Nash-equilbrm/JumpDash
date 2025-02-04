@@ -78,6 +78,7 @@ namespace Game.JumpDash.Player
                     transform.localScale = newScale;
                     _scaleTween = null;
                 });
+            this.Broadcast(EventID.Jump);
 
         }
     }

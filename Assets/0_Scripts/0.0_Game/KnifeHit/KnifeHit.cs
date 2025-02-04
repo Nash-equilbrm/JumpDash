@@ -1,4 +1,5 @@
 using Commons;
+using Game.KnifeHit.Player;
 using Game.KnifeHit.UI;
 using Game.UI;
 using Patterns;
@@ -50,10 +51,11 @@ namespace Game.KnifeHit
         internal override void OnMinigamePlayEnter()
         {
             base.OnMinigamePlayEnter();
-            this.Register(EventID.PlayerFinishLaunch, OnPlayerFinishLaunch);
             this.Register(EventID.HitObstacle, OnHitObstacle);
             this.Register(EventID.HitTarget, OnHitTarget);
             UIManager.Instance.ShowScreen<KnifeHitGameplayScreen>(CurrentLevel, forceShowData: true);
+            ObjectPooling.Instance.GetPool(Constants.STR_KNIFE_TAG).RecycleAll();
+            _knifeLeft = CurrentLevel.knifeCount;
             this.Broadcast(EventID.InitTarget, this);
         }
 
@@ -61,7 +63,6 @@ namespace Game.KnifeHit
         {
             base.OnMinigamePlayExit();
 
-            this.Unregister(EventID.PlayerFinishLaunch, OnPlayerFinishLaunch);
             this.Unregister(EventID.HitObstacle, OnHitObstacle);
             this.Unregister(EventID.HitTarget, OnHitTarget);
             var gamePlayScreen = UIManager.Instance.GetExistScreen<KnifeHitGameplayScreen>();
@@ -71,15 +72,16 @@ namespace Game.KnifeHit
 
         private void InstantitateGameObjects()
         {
-            if (this.Player == null)
+            if (Player == null)
             {
-                this.Player = Instantiate(this.playerPrefab, transform);
+                Player = Instantiate(playerPrefab, transform);
             }
             else
             {
-                this.Player.SetActive(true);
+                Player.SetActive(true);
+                Player.GetComponent<PlayerLaunchKnife>().CanLaunch = true;
             }
-            ObjectPooling.Instance.GetPool(Constants.STR_KNIFE_TAG).Prepare(10);
+            ObjectPooling.Instance.GetPool(Constants.STR_KNIFE_TAG).Prepare(1);
         }
 
         private void OnHitObstacle(object obj)
@@ -96,17 +98,8 @@ namespace Game.KnifeHit
                 UpdateBestScore();
                 UpdateCurrentLevel();
                 _knifeLeft = CurrentLevel.knifeCount;
-                this.Broadcast(EventID.ReinitTarget, this);
+                this.Broadcast(EventID.GainPoint, this);
             }
-        }
-
-        private void OnPlayerFinishLaunch(object obj)
-        {
-            //this.CurrentScore++;
-            //UpdateBestScore();
-            //UpdateCurrentLevel();
-            //this.Broadcast(EventID.GainPoint, this.CurrentScore);
-            //this.Broadcast(EventID.ReinitTarget, this);
         }
 
 
@@ -126,15 +119,15 @@ namespace Game.KnifeHit
             this.Unregister(EventID.OnContinueClicked, OnContinueClicked);
             this.Unregister(EventID.UnloadMiniGame, UnloadMiniGame);
             ObjectPooling.Instance.GetPool(Constants.STR_KNIFE_TAG).DestroyAll();
-            Common.UnloadSceneAsync(this, Constants.SCENE_JUMP_DASH, gcCollect: true);
+            Common.UnloadSceneAsync(this, Constants.SCENE_KNIFE_HIT, gcCollect: true);
         }
 
 
         private void UpdateBestScore()
         {
-            GameManager.Instance.GameData.bestScore.jumpDash =
-                GameManager.Instance.GameData.bestScore.jumpDash > CurrentScore
-                ? GameManager.Instance.GameData.bestScore.jumpDash
+            GameManager.Instance.GameData.bestScore.knifeHit =
+                GameManager.Instance.GameData.bestScore.knifeHit > CurrentScore
+                ? GameManager.Instance.GameData.bestScore.knifeHit
                 : CurrentScore;
         }
 

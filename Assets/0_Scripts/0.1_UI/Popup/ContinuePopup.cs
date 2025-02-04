@@ -32,6 +32,7 @@ namespace Game.UI
         public override void Show(object data)
         {
             base.Show(data);
+            this.Broadcast(EventID.LoseGame);
             DOTween.Sequence()
                 .AppendInterval(.5f)
                 .Append(pCanvasGroup.DOFade(1, duration).SetEase(ease));

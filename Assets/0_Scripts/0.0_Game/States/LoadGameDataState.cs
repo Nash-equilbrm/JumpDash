@@ -18,7 +18,9 @@ namespace Game.State
         {
             base.Enter();
             Application.targetFrameRate = 60;
+            Screen.orientation = ScreenOrientation.Portrait;
             DOTween.Init();
+
             GetConfigAndData();
         }
 

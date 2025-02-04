@@ -164,6 +164,7 @@ namespace Patterns
         {
             obj.SetActive(false);
             obj.transform.SetParent(InactiveObjects);
+            obj.transform.localPosition = Vector3.zero;
         }
     }
 }

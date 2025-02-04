@@ -17,12 +17,14 @@ namespace Game
 
 
 
+
         [Header("Hierachy")]
         public GameObject Managers;
         public GameObject UI;
         public GameObject Settings;
         public GameObject World;
-
+        public Camera MainCamera;
+        public Camera UICamera;
 
 
         #region Configs
@@ -35,7 +37,7 @@ namespace Game
         [SerializeField] private GameData _gameData;
         public GameData GameData { get => _gameData; internal set => _gameData = value; }
 
-        public int CurrentGame { get; private set; } = 2;
+        public int CurrentGame { get; internal set; } = 2;
         #endregion
 
 

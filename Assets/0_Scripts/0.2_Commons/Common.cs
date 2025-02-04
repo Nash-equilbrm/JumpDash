@@ -73,12 +73,19 @@ namespace Commons
                 GC.WaitForPendingFinalizers();
             }
         }
+
+        public static T GetRandomItem<T>(T[] array)
+        {
+            if (array == null || array.Length == 0) return default;
+            return array[UnityEngine.Random.Range(0, array.Length)];
+        }
     }
 
 
     public static class Constants
     {
         public static int SCENE_JUMP_DASH = 1;
+        public static int SCENE_KNIFE_HIT = 2;
         public static string JUMP_DASH_PLAYER_RUN_ANIM = "Ninja Run";
         public static string JUMP_DASH_PLAYER_JUMP_ANIM = "Ninja Jump";
         public static string JUMP_DASH_PLAYER_DEAD_ANIM = "Ninja Dead";
@@ -90,6 +97,12 @@ namespace Commons
         public static string STR_BEST_SCORE = "Best Score";
         public static string STR_SCORE = "Score";
         public static string STR_ENEMY_TAG = "Enemy";
+
+        public static float CAMERA_SHAKE_HEAVY = 1f;
+        public static float CAMERA_SHAKE_MEDIUM = 0.5f;
+        public static float CAMERA_SHAKE_LIGHT = 0.1f;
+
+        public static float KNIFE_HIT_TARGET_SPIN_LERP_SPEED = 0.2f;
     }
 }
 

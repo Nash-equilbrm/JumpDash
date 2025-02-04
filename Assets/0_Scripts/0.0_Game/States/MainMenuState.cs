@@ -28,6 +28,8 @@ namespace Game.State
 
         private void OnPlayBtnClicked(object obj)
         {
+            if (obj is not int gameIndex) return;
+            _context.CurrentGame = gameIndex;
             _context.ChangeState(GameManager.GameState.MiniGame);
         }
 

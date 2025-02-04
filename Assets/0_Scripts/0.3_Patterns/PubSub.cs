@@ -58,10 +58,7 @@ namespace Patterns
             {
                 PubSub.Instance.Register(id, action);
             }
-            else
-            {
-                LogUtility.Error("Register", "No Instance");
-            }
+            else LogUtility.Error("Register", "No Instance");
         }
         public static void Unregister(this MonoBehaviour listener, EventID id, Action<object> action)
         {
